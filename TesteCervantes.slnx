@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/Itens de Solução/">
+    <File Path="script.sql" />
+  </Folder>
+  <Project Path="TesteCervantes/TesteCervantes.csproj" />
+</Solution>
