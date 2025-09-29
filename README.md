@@ -16,34 +16,43 @@ Ambos os containers estão conectados em uma rede Docker dedicada chamada postgr
 
 ## 🗄️ Estrutura do Banco de Dados
 
-### 📝 Cadastros
-A tabela log_operacoes armazena todas as alterações realizadas na tabela cadastros.
+📝 Cadastros
+A tabela **cadastros** armazena os registros principais.
 Campos:
 
-Id: Identificador único da operação (SERIAL / PK)
+- `Id`: Identificador único do cadastro (SERIAL / PK)
 
-DataHora: Data e hora da operação (TIMESTAMP, default = CURRENT_TIMESTAMP)
+- `Nome`: Nome do cadastro (VARCHAR 100, NOT NULL)
 
-TipoOperacao: Tipo da operação realizada (INSERT, UPDATE, DELETE)
+- `Numero`: Número associado ao cadastro (NUMERIC 15, NOT NULL, UNIQUE)
 
-IdCadastro: ID do registro da tabela cadastros afetado (INTEGER, FK implícita)
+📜 LogOperacoes
+A tabela **log_operacoes** armazena todas as alterações realizadas na tabela `cadastros`.
+Campos:
 
-NomeAnterior: Nome antes da alteração (VARCHAR 100, só em UPDATE/DELETE)
+- `Id`: Identificador único da operação (SERIAL / PK)
 
-NumeroAnterior: Número antes da alteração (NUMERIC 15, só em UPDATE/DELETE)
+- `DataHora`: Data e hora da operação (TIMESTAMP, default = `CURRENT_TIMESTAMP`)
 
-NomeNovo: Nome após a alteração (VARCHAR 100, só em INSERT/UPDATE)
+- `TipoOperacao`: Tipo da operação realizada (INSERT, UPDATE, DELETE)
 
-NumeroNovo: Número após a alteração (NUMERIC 15, só em INSERT/UPDATE)
+- `IdCadastro`: ID do registro da tabela `cadastros` afetado (INTEGER, FK implícita)
+
+- `NomeAnterior`: Nome antes da alteração (VARCHAR 100, só em UPDATE/DELETE)
+
+- `NumeroAnterior`: Número antes da alteração (NUMERIC 15, só em UPDATE/DELETE)
+
+- `NomeNovo`: Nome após a alteração (VARCHAR 100, só em INSERT/UPDATE)
+
+- `NumeroNovo`: Número após a alteração (NUMERIC 15, só em INSERT/UPDATE)
 
 ⚙️ Trigger & Function
 
-A função log_operacoes_function() é chamada automaticamente toda vez que ocorre um INSERT, UPDATE ou DELETE na tabela cadastros.
+A função `log_operacoes_function()` é chamada automaticamente toda vez que ocorre um INSERT, UPDATE ou DELETE na tabela `cadastros`.
 
-O trigger trg_log_operacoes aplica a função para cada linha modificada.
+O trigger `trg_log_operacoes` aplica a função para cada linha modificada.
 
-Dessa forma, o histórico de operações fica salvo na tabela log_operacoes.
-
+Dessa forma, o histórico de operações fica salvo na tabela `log_operacoes`.
 
 
 ## 🌐 Fluxo de Configuração
