@@ -1,18 +1,37 @@
 ##  ⚙️Projeto TesteCervantes
 
-Este é um projeto de configuração de ambiente de banco de dados utilizando PostgreSQL e pgAdmin dentro de containers Docker.
-O objetivo é facilitar o desenvolvimento e a administração de bancos de dados, fornecendo um ambiente isolado, versionável e de fácil replicação.
+Este projeto foi desenvolvido como parte do Teste de Desenvolvimento , atendendo aos requisitos de criação de uma aplicação desktop em Windows Forms integrada ao PostgreSQL, com cadastro, validações no banco e registro de operações em log.
 
 ## 🧩 Estrutura do Projeto
 
 ### 📁 Banco de Dados
-Container com PostgreSQL 15, rodando na porta 5432, configurado com banco inicial meu_banco, usuário postgres e senha definida no momento da criação.
+- Container com PostgreSQL 15, rodando na porta 5432, configurado com banco inicial meu_banco, usuário postgres e senha definida no momento da criação.
 
 ### 📁 Gerenciador Web (pgAdmin)
-Container com pgAdmin4, acessível via navegador em http://localhost:8080, permitindo administração visual do banco de dados.
+- Container com pgAdmin4, acessível via navegador em http://localhost:8080, permitindo administração visual do banco de dados.
 
 ### 📁 Rede Docker
-Ambos os containers estão conectados em uma rede Docker dedicada chamada postgres-network, garantindo comunicação segura entre eles.
+- Ambos os containers estão conectados em uma rede Docker dedicada chamada postgres-network, garantindo comunicação segura entre eles.
+
+### 📁 Interface Gráfica (Windows Forms)
+- Tela de cadastro desenvolvida em Windows Forms.
+- Contém campos para Nome (texto) e Telefone/Número (numérico).
+- Inclui botões com as seguintes funcionalidades:
+  - Salvar → Insere um novo registro.
+  - Atualizar → Atualiza um cadastro existente.
+  - Deletar → Remove um registro.
+  - Listar → Exibe todos os registros cadastrados.
+
+### 📁 Código Fonte (C#)
+- Implementação da lógica de conexão com o PostgreSQL.
+- Configuração dos eventos dos botões para operações de Insert, Update, Delete e Select.
+- Integração com validações do banco de dados (campos obrigatórios, valores numéricos maiores que zero, unicidade do campo).
+
+### 📁 Script SQL
+- Arquivo script.sql com a criação das tabelas:
+  - cadastros (tabela principal com os campos Nome e Numero).
+  - log_operacoes (tabela de auditoria de operações realizadas).
+- Função e trigger para registrar automaticamente cada operação no log.
 
 ## 🗄️ Estrutura do Banco de Dados
 
@@ -76,4 +95,10 @@ Etapa	Descrição
 - Docker (containers e rede virtual)
 
 - Docker Network (para comunicação segura entre containers)
+  
+- Windows Forms (C#) → Desenvolvimento da interface gráfica da aplicação desktop.
+
+- Triggers e Funções no PostgreSQL → Responsáveis por registrar automaticamente logs das operações (INSERT, UPDATE, DELETE) na tabela `log_operacoes`.
+
+- .NET Framework / C# → Implementação da lógica de negócio, validações e manipulação do banco de dados pela aplicação.
 
