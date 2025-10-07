@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             textBox1 = new TextBox();
             textBox2 = new TextBox();
             button1 = new Button();
@@ -37,8 +36,6 @@
             button4 = new Button();
             label1 = new Label();
             label2 = new Label();
-            pictureBox2 = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
             // 
             // textBox1
@@ -115,22 +112,12 @@
             label2.TabIndex = 7;
             label2.Text = "📞 Telefone";
             // 
-            // pictureBox2
-            // 
-            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(271, 355);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(227, 83);
-            pictureBox2.TabIndex = 9;
-            pictureBox2.TabStop = false;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
             ClientSize = new Size(800, 450);
-            Controls.Add(pictureBox2);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(button4);
@@ -141,7 +128,6 @@
             Controls.Add(textBox1);
             Name = "Form1";
             Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -156,6 +142,5 @@
         private Button button4;
         private Label label1;
         private Label label2;
-        private PictureBox pictureBox2;
     }
 }
