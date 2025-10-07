@@ -25,55 +25,22 @@ public class Cadastro
     
     public Cadastro Post(string nome, long numero)
     {
-        if (string.IsNullOrWhiteSpace(nome))
-        {
-            MessageBox.Show("Nome é obrigatório");
-            return null;
-        }
+        
 
         
-        string numeroStr = numero.ToString();
-        if (numeroStr.Length < 10 || numeroStr.Length > 12)
-        {
-            MessageBox.Show("Telefone deve ter entre 10 e 12 dígitos");
-            return null;
-        }
-
-        if (numero <= 0)
-        {
-            MessageBox.Show("Telefone deve ser maior que zero");
-            return null;
-        }
-
-        try
-        {
             using var connection = new NpgsqlConnection(ConnectionString);
             connection.Open();
 
             var sql = "INSERT INTO cadastros (Nome, Numero) VALUES (@nome, @numero) RETURNING Id";
             using var command = new NpgsqlCommand(sql, connection);
             command.Parameters.AddWithValue("@nome", nome);
-            command.Parameters.AddWithValue("@numero", numero); // Agora é long
+            command.Parameters.AddWithValue("@numero", numero); 
 
             var novoId = (int)command.ExecuteScalar();
 
             return new Cadastro(nome, numero) { Id = novoId };
-        }
-        catch (PostgresException ex) when (ex.SqlState == "23505")
-        {
-            MessageBox.Show("Este telefone já existe! Escolha outro telefone.");
-            return null;
-        }
-        catch (PostgresException ex) when (ex.SqlState == "23514")
-        {
-            MessageBox.Show("Número inválido. Deve ser maior que zero.");
-            return null;
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Erro ao salvar: {ex.Message}");
-            return null;
-        }
+       
+        
     }
 
     
@@ -81,8 +48,8 @@ public class Cadastro
     {
         var cadastros = new List<Cadastro>();
 
-        try
-        {
+        
+        
             using var connection = new NpgsqlConnection(ConnectionString);
             connection.Open();
 
@@ -98,11 +65,8 @@ public class Cadastro
                 )
                 { Id = reader.GetInt32(0) });
             }
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Erro ao buscar dados: {ex.Message}");
-        }
+        
+        
 
         return cadastros;
     }
@@ -110,15 +74,14 @@ public class Cadastro
     
     public Cadastro GetByNomeNumero(string nome, long numero)
     {
-        try
-        {
+        
             using var connection = new NpgsqlConnection(ConnectionString);
             connection.Open();
 
             var sql = "SELECT Id, Nome, Numero FROM cadastros WHERE Nome = @nome AND Numero = @numero";
             using var command = new NpgsqlCommand(sql, connection);
             command.Parameters.AddWithValue("@nome", nome);
-            command.Parameters.AddWithValue("@numero", numero); // Agora é long
+            command.Parameters.AddWithValue("@numero", numero); 
 
             using var reader = command.ExecuteReader();
 
@@ -130,11 +93,6 @@ public class Cadastro
                 )
                 { Id = reader.GetInt32(0) };
             }
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Erro ao buscar cadastro: {ex.Message}");
-        }
 
         return null;
     }
@@ -142,28 +100,15 @@ public class Cadastro
     
     public bool Put(int id, string novoNome, long novoNumero)
     {
-        if (string.IsNullOrWhiteSpace(novoNome))
-        {
-            MessageBox.Show("Nome é obrigatório");
-            return false;
-        }
+        
 
         
         string novoNumeroStr = novoNumero.ToString();
-        if (novoNumeroStr.Length < 10 || novoNumeroStr.Length > 12)
-        {
-            MessageBox.Show("Telefone deve ter entre 10 e 12 dígitos");
-            return false;
-        }
+       
 
-        if (novoNumero <= 0)
-        {
-            MessageBox.Show("Telefone deve ser maior que zero");
-            return false;
-        }
+       
 
-        try
-        {
+        
             using var connection = new NpgsqlConnection(ConnectionString);
             connection.Open();
 
@@ -182,29 +127,14 @@ public class Cadastro
             }
 
             return false;
-        }
-        catch (PostgresException ex) when (ex.SqlState == "23505")
-        {
-            MessageBox.Show("Este telefone já existe! Escolha outro telefone.");
-            return false;
-        }
-        catch (PostgresException ex) when (ex.SqlState == "23514")
-        {
-            MessageBox.Show("Número inválido. Deve ser maior que zero.");
-            return false;
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Erro ao atualizar: {ex.Message}");
-            return false;
-        }
+        
+        
     }
 
     
     public bool Delete(int id)
     {
-        try
-        {
+        
             using var connection = new NpgsqlConnection(ConnectionString);
             connection.Open();
 
@@ -220,13 +150,9 @@ public class Cadastro
                 return true;
             }
 
-            MessageBox.Show("Cadastro não encontrado");
+            
             return false;
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Erro ao deletar: {ex.Message}");
-            return false;
-        }
+        
+        
     }
 }
